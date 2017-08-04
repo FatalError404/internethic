@@ -1,0 +1,7 @@
+ezpublish_rest_fetch_content_tree:
+    path:     /fetch_content_tree/{locationId}
+    defaults:
+        _controller: InternethicRestBundle:Rest:fetchContentTree
+    methods: [GET]
+    requirements:
+        locationId: "[0-9]+"

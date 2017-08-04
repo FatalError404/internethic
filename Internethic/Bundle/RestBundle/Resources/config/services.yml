@@ -1,0 +1,62 @@
+parameters:
+    ezpublish.fieldType.eznull.class: eZ\Publish\Core\FieldType\Null\Type
+    ezpublish.fieldType.taggedmetadata.converter: eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\NullConverter
+    ezpublish.fieldType.ezsourcemedia.converter: eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\NullConverter
+    internethic.site.bundle.rest.value_object_visitor.contentList.class: Internethic\Bundle\RestBundle\Rest\ValueObjectVisitor\FetchContentTree
+services:
+    # required service to configure unknown field type (1. define the field type as null AND define its related converter)
+
+    # taggedmetadata
+    ezpublish.fieldType.taggedmetadata:
+        class: %ezpublish.fieldType.eznull.class%
+        parent: ezpublish.fieldType
+        arguments: [ "taggedmetadata" ]
+        tags:
+            - {name: ezpublish.fieldType, alias: taggedmetadata}
+        converter: %ezpublish.fieldType.converter.class%
+
+    ezpublish.fieldType.taggedmetadata.converter:
+        class: %ezpublish.fieldType.eznull.converter.class%
+        tags:
+            - {name: ezpublish.storageEngine.legacy.converter, alias: taggedmetadata, lazy: true, callback: '::create'}
+
+    # ezsourcemedia
+    ezpublish.fieldType.ezsourcemedia:
+        class: %ezpublish.fieldType.eznull.class%
+        parent: ezpublish.fieldType
+        arguments: [ "ezsourcemedia" ]
+        tags:
+            - {name: ezpublish.fieldType, alias: ezsourcemedia}
+        converter: %ezpublish.fieldType.converter.class%
+
+    ezpublish.fieldType.ezsourcemedia.converter:
+        class: %ezpublish.fieldType.eznull.converter.class%
+        tags:
+            - {name: ezpublish.storageEngine.legacy.converter, alias: ezsourcemedia, lazy: true, callback: '::create'}
+
+    # lotags (specific datatypes)
+    ezpublish.fieldType.lotags:
+        class: %ezpublish.fieldType.eznull.class%
+        parent: ezpublish.fieldType
+        arguments: [ "lotags" ]
+        tags:
+            - {name: ezpublish.fieldType, alias: lotags}
+        converter: %ezpublish.fieldType.converter.class%
+
+    ezpublish.fieldType.lotags.converter:
+        class: %ezpublish.fieldType.eznull.converter.class%
+        tags:
+            - {name: ezpublish.storageEngine.legacy.converter, alias: lotags, lazy: true, callback: '::create'}
+
+    # REST EXTENSION
+    InternethicRestBundle.rest.value_object_visitor.FetchContentTree:
+        parent: ezpublish_rest.output.value_object_visitor.base
+        class: %internethic.site.bundle.rest.value_object_visitor.contentList.class%
+        tags:
+          - { name: ezpublish_rest.output.value_object_visitor, type: Internethic\Bundle\RestBundle\Rest\Values\FetchContentTree}
+
+    InternethicRestBundle.input_parser.FetchContentTree:
+        parent: ezpublish_rest.input.parser
+        class: Internethic\Bundle\RestBundle\Rest\InputParser\FetchContentTree
+        tags:
+            - { name: ezpublish_rest.input.parser, mediaType: application/vnd.my.FetchContentTree }
