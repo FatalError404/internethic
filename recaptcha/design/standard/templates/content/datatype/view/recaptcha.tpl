@@ -1,0 +1,1 @@
+{* content datatype view recaptcha template : use the recaptcha as information collector datatype in order to run the server side reacpatcha api check see extension/recaptcha/datatypes/recaptcha/recaptchatype.php *}

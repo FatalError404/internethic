@@ -1,0 +1,31 @@
+reCAPTCHA README
+================
+
+Version 1
+---------
+
+The reCAPTCHA PHP Lirary helps you use the reCAPTCHA API. Documentation
+for this library can be found at
+
+	http://recaptcha.net/plugins/php
+
+Version 2
+---------
+
+Requirements : curl
+
+The class APIRecaptcha2 is designed to behave with API V2
+This class uses CURL to call the API v2 endpoint
+
+The updated datatype recaptcha can be used in the two version until 2018 march 31, after only version 2 will be enabled.
+The updated datatype recaptcha supports:
+ - 2 validation process according to current used version
+ - backward compatibility
+
+Especially new features from API V2:
+ - new post from Recaptcha v2 component
+ - new api endpoint
+ - new api response
+ - new integration about the Recaptcha v2 component (for explicit rendering)
+
+To learn more see https://developers.google.com/recaptcha/docs/display
